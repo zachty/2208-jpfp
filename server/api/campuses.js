@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const campus = await Campus.findByPk(req.params.id);
-        const students = campus.getStudents();
+        const students = await campus.getStudents();
         const data = { campus, students };
         res.send(data);
     } catch (error) {

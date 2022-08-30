@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../store/reducers/students';
+import { NavLink } from 'react-router-dom';
 
 export default function StudentList() {
     const dispatch = useDispatch();
@@ -15,7 +16,9 @@ export default function StudentList() {
         <div>
             {students.map(student => (
                 <h1 key={student.id}>
-                    {student.firstName} {student.lastName}
+                    <NavLink to={`/students/${student.id}`}>
+                        {student.firstName} {student.lastName}
+                    </NavLink>
                 </h1>
             ))}
         </div>

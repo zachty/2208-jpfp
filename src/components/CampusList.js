@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCampuses } from '../store/reducers/campuses';
+import { NavLink } from 'react-router-dom';
 
 export default function CampusList() {
     const dispatch = useDispatch();
@@ -15,7 +16,9 @@ export default function CampusList() {
         <div>
             {campuses.map(campus => (
                 <div key={campus.id}>
-                    <h1>{campus.name}</h1>
+                    <NavLink to={`/campuses/${campus.id}`}>
+                        <h1>{campus.name}</h1>
+                    </NavLink>
                     <img src={campus.imageUrl} />
                 </div>
             ))}
