@@ -12,4 +12,17 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+// GET api/campuses/id
+router.get('/:id', async (req, res, next) => {
+    try {
+        const campus = await Campus.findByPk(req.params.id);
+        const students = campus.getStudents();
+        const data = { campus, students };
+        res.send(data);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 module.exports = router;
