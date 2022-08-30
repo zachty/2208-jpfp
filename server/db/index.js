@@ -77,7 +77,6 @@ const syncAndSeed = async () => {
     const testCampus = await Campus.create({
         name: 'Test',
         address: 'Egypt',
-        description: 'test test',
     });
 
     arby.setCampus(oni);

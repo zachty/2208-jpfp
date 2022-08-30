@@ -18,6 +18,10 @@ app.use('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+//TODO: fix bug
+//^^ redirects routes to api correctly unless another / is added
+//localhost:3000/students works, localhost:3000/sudents/1 doesnt
+
 //handle 404 with react-router
 
 //handle errors

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCampus } from '../store/reducers/singleCampus';
 
@@ -11,19 +11,29 @@ export default function SingleCampus() {
         dispatch(fetchCampus(params.id));
     }, []);
 
-    const campus = useSelector(state => state.campus);
+    const { campus, students } = useSelector(state => state.campus);
+    const { name, imageUrl, address, description } = campus;
 
-    console.log(campus);
+    //if no students, use this string
+    const studentsString = `${students.length} students assigned to this campus!`;
 
     return (
         <div>
-            <h1>Campus_Name</h1>
-            {/* <img src="" /> */}
-            <p>Campus_address</p>
-            <p>campus_description</p>
+            <h1>{name}</h1>
+            <img src={imageUrl} />
+            <p>{address}</p>
+            <p>{description}</p>
             <ul>
-                <li>Student 1</li>
-                <li>Student 2</li>
+                <h3>Enrollees:</h3>
+                {(students.length &&
+                    students.map(student => (
+                        <li key={student.id}>
+                            <NavLink to={`/students/${student.id}`}>
+                                {student.firstName} {student.lastName}
+                            </NavLink>
+                        </li>
+                    ))) ||
+                    studentsString}
             </ul>
         </div>
     );
