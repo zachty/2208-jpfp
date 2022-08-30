@@ -14,16 +14,11 @@ app.use(volleyball);
 app.use('/api', require('./api'));
 
 //send to the home page
-app.get('/', (req, res, next) => {
+app.use('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-//catch unknown routes and send 404
-app.get('*', (req, res, next) => {
-    const err = new Error(`<h2>Page not found! Try a different route!</h2>`);
-    err.status = 404;
-    next(err);
-});
+//handle 404 with react-router
 
 //handle errors
 app.use((err, req, res, next) => {
