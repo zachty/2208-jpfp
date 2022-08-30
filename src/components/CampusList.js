@@ -9,13 +9,16 @@ export default function CampusList() {
         dispatch(fetchCampuses());
     }, []);
 
-    const campuses = useSelector(state => state);
-    console.log(campuses);
+    const campuses = useSelector(state => state.campuses);
 
     return (
         <div>
-            <h1>CampusTitle1</h1>
-            <img src="https://static.vecteezy.com/system/resources/previews/000/353/557/original/building-vector-icon.jpg" />
+            {campuses.map(campus => (
+                <div key={campus.id}>
+                    <h1>{campus.name}</h1>
+                    <img src={campus.imageUrl} />
+                </div>
+            ))}
         </div>
     );
 }

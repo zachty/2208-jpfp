@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { NavLink, Routes, Route } from 'react-router-dom';
 import { CampusList, StudentList } from './components';
 
 function App() {
@@ -7,11 +7,14 @@ function App() {
         <>
             <div>
                 <nav>
-                    <Link to="/students">Students</Link>
-                    <Link to="/campuses">Campuses</Link>
+                    <NavLink to="/students">Students</NavLink>
+                    <NavLink to="/campuses">Campuses</NavLink>
                 </nav>
-                <CampusList />
-                <StudentList />
+                <Routes>
+                    <Route index element={<></>} />
+                    <Route path="/campuses" element={<CampusList />} />
+                    <Route path="/students" element={<StudentList />} />
+                </Routes>
             </div>
         </>
     );

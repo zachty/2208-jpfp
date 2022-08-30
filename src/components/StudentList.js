@@ -9,13 +9,15 @@ export default function StudentList() {
         dispatch(fetchStudents());
     }, []);
 
-    const students = useSelector(state => state);
-    console.log(students);
+    const students = useSelector(state => state.students);
 
     return (
         <div>
-            <h1>StudentName</h1>
-            <img src="https://riverlegacy.org/wp-content/uploads/2021/07/blank-profile-photo.jpeg" />
+            {students.map(student => (
+                <h1 key={student.id}>
+                    {student.firstName} {student.lastName}
+                </h1>
+            ))}
         </div>
     );
 }

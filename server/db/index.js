@@ -14,7 +14,7 @@ const syncAndSeed = async () => {
         lastName: 'Halo',
         email: 'arby@arbyndachief.com',
         imageUrl:
-            'https://static.wikia.nocookie.net/arbynthechiefbeta/images/0/00/The_Arbiter_%28Season_8%29.jpg/revision/latest?cb=20220126195127',
+            'https://static.wikia.nocookie.net/arbynthechiefbeta/images/0/00/The_Arbiter_%28Season_8%29.jpg',
         gpa: 1.3,
     });
     await Student.create({
@@ -51,7 +51,7 @@ const syncAndSeed = async () => {
     await Campus.create({
         name: 'ONI',
         imageUrl:
-            'https://static.wikia.nocookie.net/halo/images/6/67/Halo_Reach_-_Sword_Base_02.jpg/revision/latest?cb=20100922132556',
+            'https://static.wikia.nocookie.net/halo/images/6/67/Halo_Reach_-_Sword_Base_02.jpg/',
         address:
             '1 Secret Drive, New Alexandria, Eposz, Reach, Epsilon Erandi System',
         description: `The Office of Naval Intelligence is responsible for UNSC signals intelligence (SIGINT), human intelligence (HUMINT), counter-espionage, propaganda, and top-secret research and development programs. The agency mostly operates independently of other UNSC branches, and at times it contravenes the law and UNSC protocol to complete top-secret missions. ONI's Commander-in-Chief (CINCONI), is Admiral Serin Osman, successor and protegé to Margaret Parangosky.
@@ -69,7 +69,7 @@ const syncAndSeed = async () => {
     await Campus.create({
         name: 'Hell',
         imageUrl:
-            'https://static.wikia.nocookie.net/doom/images/8/89/Hell_intermission_map.png/revision/latest?cb=20170105213247',
+            'https://static.wikia.nocookie.net/doom/images/8/89/Hell_intermission_map.png',
         address: 'Somewhere, Mars',
         description:
             'Not so much a university anymore, closed down in 2149 due to being overrun by an infestation of demons. Will be under new management soon',
