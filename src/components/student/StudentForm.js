@@ -24,13 +24,7 @@ export default function StudentForm() {
         if (student.id && params.id) {
             dispatch(changeStudentForm(student));
         } else {
-            dispatch(
-                changeStudentForm({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                })
-            );
+            dispatch(changeStudentForm({}));
         }
     }, [student]);
 
@@ -45,14 +39,12 @@ export default function StudentForm() {
             //edit single student
             //TODO: decide whether to switch the async parts into the thunk
             (async () => {
-                await dispatch(
-                    updateStudent(params.id, { firstName, lastName, email })
-                );
+                await dispatch(updateStudent(params.id, form));
                 await dispatch(fetchStudent(params.id));
             })();
         } else {
             //create new student
-            dispatch(createStudent({ firstName, lastName, email }));
+            dispatch(createStudent(form));
             dispatch(fetchStudents());
         }
     };

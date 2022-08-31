@@ -5,7 +5,7 @@ import axios from 'axios';
 const SUBMIT_STUDENT = 'SUBMIT_STUDENT';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
 const CHANGE_STUDENT_FORM = 'CHANGE_STUDENT_FORM';
-const ERROR = 'ERROR';
+const STUDENT_ERROR = 'STUDENT_ERROR';
 
 //ACTION GENERATORS
 const submitStudent = () => ({
@@ -23,7 +23,7 @@ export const changeStudentForm = form => ({
 });
 
 const postError = err => ({
-    type: ERROR,
+    type: STUDENT_ERROR,
     err,
 });
 
@@ -31,8 +31,7 @@ const postError = err => ({
 export const createStudent = student => {
     return async dispatch => {
         try {
-            //TODO: figure out if I need this data
-            const { data } = await axios.post('/api/students', student);
+            await axios.post('/api/students', student);
             dispatch(submitStudent());
         } catch (err) {
             console.error(err);
@@ -68,9 +67,9 @@ export default (state = init, action) => {
         case UPDATE_STUDENT:
             return action.updatedStudent;
         case CHANGE_STUDENT_FORM:
-            return action.form;
-        case ERROR:
-            return { ...state, error: action.err.response.data };
+            return Object.keys(action.form).length ? action.form : init;
+        case STUDENT_ERROR:
+            return { ...state, error: action.err };
         default:
             return state;
     }
