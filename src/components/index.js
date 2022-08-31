@@ -1,6 +1,6 @@
-import CampusList from './CampusList';
-import StudentList from './StudentList';
-import SingleCampus from './SingleCampus';
-import SingleStudent from './SingleStudent';
+import CampusList from './campus/CampusList';
+import SingleCampus from './campus/SingleCampus';
+import StudentList from './student/StudentList';
+import SingleStudent from './student/SingleStudent';
 
 export { CampusList, StudentList, SingleCampus, SingleStudent };

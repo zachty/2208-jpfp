@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCampus } from '../store/reducers/singleCampus';
+import { fetchCampus } from '../../store/reducers/campus/singleCampus';
 
 export default function SingleCampus() {
     const dispatch = useDispatch();

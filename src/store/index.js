@@ -6,6 +6,8 @@ import {
     campusReducer,
     singleCampusReducer,
     singleStudentReducer,
+    campusFormReducer,
+    studentFormReducer,
 } from './reducers';
 
 const allReducers = combineReducers({
@@ -13,6 +15,8 @@ const allReducers = combineReducers({
     campuses: campusReducer,
     student: singleStudentReducer,
     campus: singleCampusReducer,
+    campusForm: campusFormReducer,
+    studentForm: studentFormReducer,
 });
 
 function configureStore() {
