@@ -2,16 +2,22 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import AddStudent from './AddStudent';
-import { fetchStudents } from '../../store/reducers/student/students';
+import {
+    fetchStudents,
+    deleteStudent,
+} from '../../store/reducers/student/students';
 
 export default function StudentList() {
     const dispatch = useDispatch();
+    const students = useSelector(state => state.students);
 
     useEffect(() => {
         dispatch(fetchStudents());
     }, []);
 
-    const students = useSelector(state => state.students);
+    const handleDelete = e => {
+        dispatch(deleteStudent(e.target.value));
+    };
 
     return (
         <div>
@@ -21,6 +27,9 @@ export default function StudentList() {
                         <NavLink to={`/students/${student.id}`}>
                             {student.firstName} {student.lastName}
                         </NavLink>
+                        <button value={student.id} onClick={handleDelete}>
+                            X
+                        </button>
                     </h1>
                 ))}
             </div>
