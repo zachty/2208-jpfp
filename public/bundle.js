@@ -2555,11 +2555,9 @@ function CampusForm() {
     return state.campusForm;
   }); //for filling in/updating form info
 
-  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+  var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campus;
-  }),
-      campus = _useSelector.campus; //sets initial input
-
+  }); //sets initial input
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (params.id && campus.id) {
@@ -2707,21 +2705,19 @@ function SingleCampus() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_2__.fetchCampus)(params.id));
   }, []);
-
-  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+  var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campus;
-  }),
-      campus = _useSelector.campus,
-      students = _useSelector.students;
-
+  });
   var name = campus.name,
       imageUrl = campus.imageUrl,
       address = campus.address,
-      description = campus.description; //if no students, use this string
+      description = campus.description,
+      students = campus.students; //if no students, use this string
 
   var studentsString = "".concat(students.length, " students assigned to this campus!");
 
-  var handleUnregister = function handleUnregister(id) {//TODO: dispatch unregister thunk
+  var handleUnregister = function handleUnregister(id) {
+    dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_2__.unregisterStudent)(params.id, id));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -3348,7 +3344,8 @@ var deleteCampus = function deleteCampus(id) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "fetchCampus": () => (/* binding */ fetchCampus)
+/* harmony export */   "fetchCampus": () => (/* binding */ fetchCampus),
+/* harmony export */   "unregisterStudent": () => (/* binding */ unregisterStudent)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -3407,6 +3404,44 @@ var fetchCampus = function fetchCampus(id) {
 
     return function (_x) {
       return _ref.apply(this, arguments);
+    };
+  }();
+};
+var unregisterStudent = function unregisterStudent(id, studentId) {
+  return /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(dispatch) {
+      var _yield$axios$put, data;
+
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/campuses/".concat(id, "/").concat(studentId));
+
+            case 3:
+              _yield$axios$put = _context2.sent;
+              data = _yield$axios$put.data;
+              dispatch(setCampus(data));
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              console.error(_context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 8]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }();
 }; //INITIAL STATE

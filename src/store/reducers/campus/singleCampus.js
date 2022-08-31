@@ -8,11 +8,25 @@ const setCampus = campus => ({
     type: SET_CAMPUS,
     campus,
 });
+
 //THUNK
 export const fetchCampus = id => {
     return async dispatch => {
         try {
             const { data } = await axios.get(`/api/campuses/${id}`);
+            dispatch(setCampus(data));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+};
+
+export const unregisterStudent = (id, studentId) => {
+    return async dispatch => {
+        try {
+            const { data } = await axios.put(
+                `/api/campuses/${id}/${studentId}`
+            );
             dispatch(setCampus(data));
         } catch (err) {
             console.error(err);

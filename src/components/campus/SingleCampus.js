@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCampus } from '../../store/reducers/campus/singleCampus';
+import {
+    fetchCampus,
+    unregisterStudent,
+} from '../../store/reducers/campus/singleCampus';
 import CampusForm from './CampusForm';
 
 export default function SingleCampus() {
@@ -12,14 +15,14 @@ export default function SingleCampus() {
         dispatch(fetchCampus(params.id));
     }, []);
 
-    const { campus, students } = useSelector(state => state.campus);
-    const { name, imageUrl, address, description } = campus;
+    const campus = useSelector(state => state.campus);
+    const { name, imageUrl, address, description, students } = campus;
 
     //if no students, use this string
     const studentsString = `${students.length} students assigned to this campus!`;
 
     const handleUnregister = id => {
-        //TODO: dispatch unregister thunk
+        dispatch(unregisterStudent(params.id, id));
     };
 
     return (

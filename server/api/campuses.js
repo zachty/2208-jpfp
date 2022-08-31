@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Campus } = require('../db');
+const { Campus, Student } = require('../db');
 
 // GET api/campuses
 router.get('/', async (req, res, next) => {
@@ -15,10 +15,10 @@ router.get('/', async (req, res, next) => {
 // GET api/campuses/id
 router.get('/:id', async (req, res, next) => {
     try {
-        const campus = await Campus.findByPk(req.params.id);
-        const students = await campus.getStudents();
-        const data = { campus, students };
-        res.send(data);
+        const campus = await Campus.findByPk(req.params.id, {
+            include: Student,
+        });
+        res.send(campus);
     } catch (error) {
         console.error(error);
         next(error);
@@ -52,6 +52,21 @@ router.put('/:id', async (req, res, next) => {
     try {
         const campus = await Campus.findByPk(req.params.id);
         res.send(await campus.update(req.body));
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// PUT api/campuses/id/studentId
+router.put('/:id/:studentId', async (req, res, next) => {
+    try {
+        const oldCampus = await Campus.findByPk(req.params.id);
+        await oldCampus.removeStudent(req.params.studentId);
+        const campus = await Campus.findByPk(req.params.id, {
+            include: Student,
+        });
+        res.send(campus);
     } catch (error) {
         console.error(error);
         next(error);

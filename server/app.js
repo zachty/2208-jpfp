@@ -10,6 +10,7 @@ app.use(volleyball);
 
 //body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // static middleware
 app.use(express.static(path.join(__dirname, '../public')));
