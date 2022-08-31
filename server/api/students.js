@@ -50,10 +50,8 @@ router.delete('/:id', async (req, res, next) => {
 // PUT /api/students/id
 router.put('/:id', async (req, res, next) => {
     try {
-        const student = await Student.update(req.body, {
-            where: { id: req.params.id },
-        });
-        res.send(student);
+        const student = await Student.findByPk(req.params.id);
+        res.send(await student.update(req.body));
     } catch (error) {
         console.error(error);
         next(error);

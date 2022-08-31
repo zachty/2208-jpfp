@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import CampusForm from './CampusForm';
 import {
     fetchCampuses,
     deleteCampus,
 } from '../../store/reducers/campus/campuses';
-import { NavLink } from 'react-router-dom';
-import AddCampus from './AddCampus';
 
 export default function CampusList() {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function CampusList() {
                 ))}
             </div>
             <div>
-                <AddCampus />
+                <CampusForm />
             </div>
         </div>
     );

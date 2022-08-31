@@ -2,7 +2,7 @@ import axios from 'axios';
 
 //ACTION TYPE
 const SUBMIT_CAMPUS = 'SUBMIT_CAMPUS';
-const CHANGE_FORM = 'CHANGE_FORM';
+const CHANGE_CAMPUS_FORM = 'CHANGE_CAMPUS_FORM';
 const ERROR = 'ERROR';
 
 //ACTION GENERATOR
@@ -11,7 +11,7 @@ const submitCampus = () => ({
 });
 
 export const changeCampusForm = (target, value) => ({
-    type: CHANGE_FORM,
+    type: CHANGE_CAMPUS_FORM,
     target,
     value,
 });
@@ -46,7 +46,7 @@ export default (state = init, action) => {
     switch (action.type) {
         case SUBMIT_CAMPUS:
             return init;
-        case CHANGE_FORM:
+        case CHANGE_CAMPUS_FORM:
             return { ...state, [action.target]: action.value };
         case ERROR:
             return { state, error: action.err.message };

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import StudentForm from './StudentForm';
 import { fetchStudent } from '../../store/reducers/student/singleStudent';
 
 export default function SingleStudent() {
@@ -20,16 +21,21 @@ export default function SingleStudent() {
 
     return (
         <div>
-            <h1>
-                {firstName} {lastName}
-            </h1>
-            <img src={imageUrl} />
-            <p>{email}</p>
-            <p>{gpa}</p>
-            {(campus && (
-                <NavLink to={`/campuses/${campus.id}`}>{campus.name}</NavLink>
-            )) ||
-                noCampus}
+            <div>
+                <h1>
+                    {firstName} {lastName}
+                </h1>
+                <img src={imageUrl} />
+                <p>{email}</p>
+                <p>{gpa}</p>
+                {(campus && (
+                    <NavLink to={`/campuses/${campus.id}`}>
+                        {campus.name}
+                    </NavLink>
+                )) ||
+                    noCampus}
+            </div>
+            <StudentForm />
         </div>
     );
 }

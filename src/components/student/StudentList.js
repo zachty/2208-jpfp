@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import AddStudent from './AddStudent';
+import StudentForm from './StudentForm';
 import {
     fetchStudents,
     deleteStudent,
@@ -34,7 +34,7 @@ export default function StudentList() {
                 ))}
             </div>
             <div>
-                <AddStudent />
+                <StudentForm />
             </div>
         </div>
     );

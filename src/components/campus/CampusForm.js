@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchCampuses } from '../../store/reducers/campus/campuses';
 import {
     createCampus,
     changeCampusForm,
 } from '../../store/reducers/campus/campusForm';
-import { fetchCampuses } from '../../store/reducers/campus/campuses';
 
-export default function AddCampus() {
+export default function CampusForm() {
     const dispatch = useDispatch();
     const { name, address } = useSelector(state => state.campusForm);
 
@@ -17,7 +17,6 @@ export default function AddCampus() {
     const handleSubmit = e => {
         e.preventDefault();
         dispatch(createCampus({ name, address }));
-        //this works but doesnt feel like the best solution, check back
         dispatch(fetchCampuses());
     };
 
