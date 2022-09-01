@@ -17,6 +17,7 @@ export default function StudentForm() {
     //get the form data
     const form = useSelector(state => state.studentForm);
     const { firstName, lastName, email } = form;
+    console.log(firstName);
 
     //if editing an entry
     const student = useSelector(state => state.student);
@@ -26,8 +27,8 @@ export default function StudentForm() {
         } else dispatch(changeStudentForm({}));
     }, [student]);
 
-    const handleChange = e => {
-        const { name, value } = e.target;
+    const handleChange = event => {
+        const { name, value } = event.target;
         dispatch(changeStudentForm({ ...form, [name]: value }));
     };
 

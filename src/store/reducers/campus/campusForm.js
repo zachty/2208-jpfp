@@ -67,7 +67,7 @@ export default (state = init, action) => {
         case CHANGE_CAMPUS_FORM:
             return Object.keys(action.form).length ? action.form : init;
         case CAMPUS_ERROR:
-            return { state, error: action.err };
+            return { ...state, error: action.err };
         default:
             return state;
     }

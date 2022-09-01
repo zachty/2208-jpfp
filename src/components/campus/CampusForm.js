@@ -15,6 +15,7 @@ export default function CampusForm() {
     //for changing form values
     const form = useSelector(state => state.campusForm);
     const { name, address } = form;
+    console.log(name, address);
 
     //sets initial input, whether updating or creating
     const campus = useSelector(state => state.campus);
