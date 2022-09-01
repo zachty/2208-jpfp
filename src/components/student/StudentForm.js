@@ -19,13 +19,11 @@ export default function StudentForm() {
     const { firstName, lastName, email } = form;
 
     //if editing an entry
-    const { student } = useSelector(state => state.student);
+    const student = useSelector(state => state.student);
     useEffect(() => {
         if (student.id && params.id) {
             dispatch(changeStudentForm(student));
-        } else {
-            dispatch(changeStudentForm({}));
-        }
+        } else dispatch(changeStudentForm({}));
     }, [student]);
 
     const handleChange = e => {
@@ -37,6 +35,7 @@ export default function StudentForm() {
         e.preventDefault();
         if (params.id) {
             //edit single student
+            //making this async await is a hotfix for things running out of order
             //TODO: decide whether to switch the async parts into the thunk
             (async () => {
                 await dispatch(updateStudent(params.id, form));

@@ -12,12 +12,12 @@ import {
 export default function CampusForm() {
     const dispatch = useDispatch();
     const params = useParams();
-    //for changing form info
+    //for changing form values
     const form = useSelector(state => state.campusForm);
-    //for filling in/updating form info
-    const campus = useSelector(state => state.campus);
+    const { name, address } = form;
 
-    //sets initial input
+    //sets initial input, whether updating or creating
+    const campus = useSelector(state => state.campus);
     useEffect(() => {
         if (params.id && campus.id) {
             dispatch(changeCampusForm(campus));
@@ -25,7 +25,7 @@ export default function CampusForm() {
     }, [campus]);
 
     const handleChange = event => {
-        //this name is from the form>input name
+        //this name is from the form > input "name" attribute
         const { name, value } = event.target;
         dispatch(changeCampusForm({ ...form, [name]: value }));
     };
@@ -52,13 +52,13 @@ export default function CampusForm() {
                 <input
                     placeholder="Name"
                     name="name"
-                    value={form.name}
+                    value={name}
                     onChange={handleChange}
                 />
                 <input
                     placeholder="Address"
                     name="address"
-                    value={form.address}
+                    value={address}
                     onChange={handleChange}
                 />
                 <button type="submit">Submit</button>

@@ -13,9 +13,9 @@ export default function SingleStudent() {
     }, []);
 
     //deconstruct student and campus from store
-    const { student, campus } = useSelector(state => state.student);
+    const student = useSelector(state => state.student);
     //prevent typeError for race conditions
-    const { firstName, lastName, imageUrl, email, gpa } = student;
+    const { firstName, lastName, imageUrl, email, gpa, campus } = student;
     //grab campus or switch to message if student doesnt have one
     const noCampus = 'This student does not have a campus!';
 

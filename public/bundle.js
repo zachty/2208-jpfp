@@ -2549,16 +2549,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function CampusForm() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(); //for changing form info
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(); //for changing form values
 
   var form = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campusForm;
-  }); //for filling in/updating form info
+  });
+  var name = form.name,
+      address = form.address; //sets initial input, whether updating or creating
 
   var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campus;
-  }); //sets initial input
-
+  });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (params.id && campus.id) {
       dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.changeCampusForm)(campus));
@@ -2566,7 +2567,7 @@ function CampusForm() {
   }, [campus]);
 
   var handleChange = function handleChange(event) {
-    //this name is from the form>input name
+    //this name is from the form > input "name" attribute
     var _event$target = event.target,
         name = _event$target.name,
         value = _event$target.value;
@@ -2610,12 +2611,12 @@ function CampusForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "Name",
     name: "name",
-    value: form.name,
+    value: name,
     onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "Address",
     name: "address",
-    value: form.address,
+    value: address,
     onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
@@ -2793,18 +2794,16 @@ function SingleStudent() {
     dispatch((0,_store_reducers_student_singleStudent__WEBPACK_IMPORTED_MODULE_3__.fetchStudent)(params.id));
   }, []); //deconstruct student and campus from store
 
-  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+  var student = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.student;
-  }),
-      student = _useSelector.student,
-      campus = _useSelector.campus; //prevent typeError for race conditions
-
+  }); //prevent typeError for race conditions
 
   var firstName = student.firstName,
       lastName = student.lastName,
       imageUrl = student.imageUrl,
       email = student.email,
-      gpa = student.gpa; //grab campus or switch to message if student doesnt have one
+      gpa = student.gpa,
+      campus = student.campus; //grab campus or switch to message if student doesnt have one
 
   var noCampus = 'This student does not have a campus!';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, firstName, " ", lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -2866,17 +2865,13 @@ function StudentForm() {
       lastName = form.lastName,
       email = form.email; //if editing an entry
 
-  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+  var student = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.student;
-  }),
-      student = _useSelector.student;
-
+  });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (student.id && params.id) {
       dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.changeStudentForm)(student));
-    } else {
-      dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.changeStudentForm)({}));
-    }
+    } else dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.changeStudentForm)({}));
   }, [student]);
 
   var handleChange = function handleChange(e) {
@@ -2891,6 +2886,7 @@ function StudentForm() {
 
     if (params.id) {
       //edit single student
+      //making this async await is a hotfix for things running out of order
       //TODO: decide whether to switch the async parts into the thunk
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
