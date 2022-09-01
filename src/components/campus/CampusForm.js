@@ -14,8 +14,7 @@ export default function CampusForm() {
     const params = useParams();
     //for changing form values
     const form = useSelector(state => state.campusForm);
-    const { name, address } = form;
-    console.log(name, address);
+    const { name, address, error } = form;
 
     //sets initial input, whether updating or creating
     const campus = useSelector(state => state.campus);
@@ -49,20 +48,31 @@ export default function CampusForm() {
 
     return (
         <div>
+            {error && error.response.data === 'Validation error' ? (
+                <p>Campus already exists! Try something else.</p>
+            ) : (
+                <></>
+            )}
             <form onSubmit={handleSubmit}>
-                <input
-                    placeholder="Name"
-                    name="name"
-                    value={name}
-                    onChange={handleChange}
-                />
-                <input
-                    placeholder="Address"
-                    name="address"
-                    value={address}
-                    onChange={handleChange}
-                />
-                <button type="submit">Submit</button>
+                <div>
+                    <input
+                        placeholder="Name"
+                        name="name"
+                        value={name}
+                        onChange={handleChange}
+                    />
+                    {error && !name && <p>Field cannot be blank!</p>}
+                </div>
+                <div>
+                    <input
+                        placeholder="Address"
+                        name="address"
+                        value={address}
+                        onChange={handleChange}
+                    />
+                    {error && !address && <p>Field cannot be blank!</p>}
+                </div>
+                <button type="submit">{params.id ? 'Update' : 'Create'}</button>
             </form>
         </div>
     );

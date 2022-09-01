@@ -16,8 +16,7 @@ export default function StudentForm() {
 
     //get the form data
     const form = useSelector(state => state.studentForm);
-    const { firstName, lastName, email } = form;
-    console.log(firstName);
+    const { firstName, lastName, email, error } = form;
 
     //if editing an entry
     const student = useSelector(state => state.student);
@@ -50,26 +49,45 @@ export default function StudentForm() {
 
     return (
         <div>
+            {error && error.response.data === 'Validation error' ? (
+                <p>Student already exists! Try a different email.</p>
+            ) : (
+                <></>
+            )}
             <form onSubmit={handleSubmit}>
-                <input
-                    name="firstName"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={handleChange}
-                />
-                <input
-                    name="lastName"
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={handleChange}
-                />
-                <input
-                    name="email"
-                    placeholder="email"
-                    value={email}
-                    onChange={handleChange}
-                />
-                <button type="submit">Submit</button>
+                <div>
+                    <input
+                        name="firstName"
+                        placeholder="First Name"
+                        value={firstName}
+                        onChange={handleChange}
+                    />
+                    {error && !firstName && <p>Field cannot be blank!</p>}
+                </div>
+                <div>
+                    <input
+                        name="lastName"
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChange={handleChange}
+                    />
+                    {error && !lastName && <p>Field cannot be blank!</p>}
+                </div>
+                <div>
+                    <input
+                        name="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={handleChange}
+                    />
+                    {error &&
+                        (error.response.data.includes('notEmpty on email') ? (
+                            !email && <p>Field cannot be blank!</p>
+                        ) : (
+                            <p>Invalid e-mail!</p>
+                        ))}
+                </div>
+                <button type="submit">{params.id ? 'Update' : 'Create'}</button>
             </form>
         </div>
     );

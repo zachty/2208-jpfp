@@ -5,6 +5,7 @@ module.exports = db.define('campus', {
     name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             notEmpty: true,
         },
@@ -17,6 +18,7 @@ module.exports = db.define('campus', {
     address: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             notEmpty: true,
         },
