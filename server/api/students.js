@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Student } = require('../db');
+const { Student, Campus } = require('../db');
 
 // GET api/students
 router.get('/', async (req, res, next) => {
@@ -15,10 +15,11 @@ router.get('/', async (req, res, next) => {
 // GET /api/students/id
 router.get('/:id', async (req, res, next) => {
     try {
-        const student = await Student.findByPk(req.params.id);
-        const campus = await student.getCampus();
-        const data = { student, campus };
-        res.send(data);
+        const student = await Student.findByPk(req.params.id, {
+            include: Campus,
+        });
+        //TODO: replace this with eager loading, will break component
+        res.send(student);
     } catch (error) {
         console.error(error);
         next(error);

@@ -6,7 +6,8 @@
     "scripts": {
         "start": "npm run build-watch & npm run start-server ",
         "build-watch": "webpack -w",
-        "start-server": "nodemon --watch server -e js,html server/index.js"
+        "start-server": "nodemon --watch server -e js,html server/index.js",
+        "test": "mocha ./tests/*.spec.js --watch --require @babel/register"
     },
     "keywords": [],
     "author": "",
@@ -36,7 +37,13 @@
         "@babel/preset-env": "7.17.10",
         "@babel/preset-react": "7.16.7",
         "@babel/preset-stage-2": "^7.8.3",
+        "@babel/register": "^7.18.9",
         "babel-loader": "8.2.5",
+        "chai": "^4.3.6",
+        "chai-as-promised": "^7.1.1",
+        "mocha": "^10.0.0",
+        "redux-immutable-state-invariant": "^2.1.0",
+        "supertest": "^6.2.4",
         "webpack": "^5.72.0",
         "webpack-dev-server": "^4.7.3"
     }

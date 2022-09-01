@@ -10,7 +10,7 @@ import {
     studentFormReducer,
 } from './reducers';
 
-const allReducers = combineReducers({
+export const allReducers = combineReducers({
     students: studentReducer,
     campuses: campusReducer,
     student: singleStudentReducer,
