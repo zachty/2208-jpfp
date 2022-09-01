@@ -34,19 +34,18 @@ export default function StudentForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (params.id) {
-            //edit single student
+        (async () => {
             //making this async await is a hotfix for things running out of order
-            //TODO: decide whether to switch the async parts into the thunk
-            (async () => {
+            if (params.id) {
+                //edit single student
                 await dispatch(updateStudent(params.id, form));
                 await dispatch(fetchStudent(params.id));
-            })();
-        } else {
-            //create new student
-            dispatch(createStudent(form));
-            dispatch(fetchStudents());
-        }
+            } else {
+                //create new student
+                await dispatch(createStudent(form));
+                await dispatch(fetchStudents());
+            }
+        })();
     };
 
     return (

@@ -11,9 +11,9 @@ const submitCampus = () => ({
     type: SUBMIT_CAMPUS,
 });
 
-const updatedCampus = updated => ({
+const updatedCampus = updatedCampus => ({
     type: UPDATE_CAMPUS,
-    updated,
+    updatedCampus,
 });
 
 export const changeCampusForm = form => ({
@@ -63,7 +63,7 @@ export default (state = init, action) => {
         case SUBMIT_CAMPUS:
             return init;
         case UPDATE_CAMPUS:
-            return action.updated;
+            return action.updatedCampus;
         case CHANGE_CAMPUS_FORM:
             return Object.keys(action.form).length ? action.form : init;
         case CAMPUS_ERROR:

@@ -33,18 +33,18 @@ export default function CampusForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (params.id) {
-            //if updating
+        (async () => {
             //make this async. Same issue with students, works the first few times then it runs SET, CHANGE, UPDATE for some reason
-            (async () => {
+            if (params.id) {
+                //if updating
                 await dispatch(updateCampus(params.id, form));
                 await dispatch(fetchCampus(params.id));
-            })();
-        } else {
-            //if making a new campus
-            dispatch(createCampus(form));
-            dispatch(fetchCampuses());
-        }
+            } else {
+                //if making a new campus
+                await dispatch(createCampus(form));
+                await dispatch(fetchCampuses());
+            }
+        })();
     };
 
     return (

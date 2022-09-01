@@ -2578,33 +2578,42 @@ function CampusForm() {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
 
-    if (params.id) {
-      //if updating
-      //make this async. Same issue with students, works the first few times then it runs SET, CHANGE, UPDATE for some reason
-      _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.updateCampus)(params.id, form));
+    _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!params.id) {
+                _context.next = 7;
+                break;
+              }
 
-              case 2:
-                _context.next = 4;
-                return dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_3__.fetchCampus)(params.id));
+              _context.next = 3;
+              return dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.updateCampus)(params.id, form));
 
-              case 4:
-              case "end":
-                return _context.stop();
-            }
+            case 3:
+              _context.next = 5;
+              return dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_3__.fetchCampus)(params.id));
+
+            case 5:
+              _context.next = 11;
+              break;
+
+            case 7:
+              _context.next = 9;
+              return dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.createCampus)(form));
+
+            case 9:
+              _context.next = 11;
+              return dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
+
+            case 11:
+            case "end":
+              return _context.stop();
           }
-        }, _callee);
-      }))();
-    } else {
-      //if making a new campus
-      dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.createCampus)(form));
-      dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
-    }
+        }
+      }, _callee);
+    }))();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
@@ -2886,34 +2895,42 @@ function StudentForm() {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
 
-    if (params.id) {
-      //edit single student
-      //making this async await is a hotfix for things running out of order
-      //TODO: decide whether to switch the async parts into the thunk
-      _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(params.id, form));
+    _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!params.id) {
+                _context.next = 7;
+                break;
+              }
 
-              case 2:
-                _context.next = 4;
-                return dispatch((0,_store_reducers_student_singleStudent__WEBPACK_IMPORTED_MODULE_3__.fetchStudent)(params.id));
+              _context.next = 3;
+              return dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(params.id, form));
 
-              case 4:
-              case "end":
-                return _context.stop();
-            }
+            case 3:
+              _context.next = 5;
+              return dispatch((0,_store_reducers_student_singleStudent__WEBPACK_IMPORTED_MODULE_3__.fetchStudent)(params.id));
+
+            case 5:
+              _context.next = 11;
+              break;
+
+            case 7:
+              _context.next = 9;
+              return dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.createStudent)(form));
+
+            case 9:
+              _context.next = 11;
+              return dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
+
+            case 11:
+            case "end":
+              return _context.stop();
           }
-        }, _callee);
-      }))();
-    } else {
-      //create new student
-      dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.createStudent)(form));
-      dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
-    }
+        }
+      }, _callee);
+    }))();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
@@ -3070,10 +3087,10 @@ var submitCampus = function submitCampus() {
   };
 };
 
-var updatedCampus = function updatedCampus(updated) {
+var updatedCampus = function updatedCampus(_updatedCampus) {
   return {
     type: UPDATE_CAMPUS,
-    updated: updated
+    updatedCampus: _updatedCampus
   };
 };
 
@@ -3181,7 +3198,7 @@ var init = {
       return init;
 
     case UPDATE_CAMPUS:
-      return action.updated;
+      return action.updatedCampus;
 
     case CHANGE_CAMPUS_FORM:
       return Object.keys(action.form).length ? action.form : init;
