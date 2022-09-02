@@ -22,7 +22,7 @@ export default function CampusForm() {
         if (params.id && campus.id) {
             dispatch(changeCampusForm(campus));
         } else dispatch(changeCampusForm({}));
-    }, [campus]);
+    }, [params, campus]);
 
     const handleChange = event => {
         //this name is from the form > input "name" attribute

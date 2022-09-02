@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import StudentForm from './StudentForm';
 import {
     fetchStudents,
@@ -10,6 +10,7 @@ import {
 export default function StudentList() {
     const dispatch = useDispatch();
     const students = useSelector(state => state.students);
+    const params = useParams();
 
     useEffect(() => {
         dispatch(fetchStudents());
@@ -22,16 +23,23 @@ export default function StudentList() {
     return (
         <div>
             <div>
-                {students.map(student => (
-                    <h1 key={student.id}>
-                        <NavLink to={`/students/${student.id}`}>
-                            {student.firstName} {student.lastName}
-                        </NavLink>
-                        <button value={student.id} onClick={handleDelete}>
-                            X
-                        </button>
-                    </h1>
-                ))}
+                {(students.length &&
+                    students.map(student => (
+                        <div key={student.id}>
+                            <h2>
+                                <NavLink to={`/students/${student.id}`}>
+                                    {student.firstName} {student.lastName}
+                                </NavLink>
+                                <button
+                                    value={student.id}
+                                    onClick={handleDelete}
+                                >
+                                    X
+                                </button>
+                            </h2>
+                            {Number(params.id) === student.id && <Outlet />}
+                        </div>
+                    ))) || <p>No students to display.</p>}
             </div>
             <div>
                 <StudentForm />

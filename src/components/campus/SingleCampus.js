@@ -6,7 +6,6 @@ import {
     fetchCampus,
     unregisterStudent,
 } from '../../store/reducers/campus/singleCampus';
-import CampusForm from './CampusForm';
 
 export default function SingleCampus() {
     const dispatch = useDispatch();
@@ -17,7 +16,7 @@ export default function SingleCampus() {
     }, []);
 
     const campus = useSelector(state => state.campus);
-    const { name, imageUrl, address, description, students } = campus;
+    const { name, address, description, students } = campus;
 
     //if no students, use this string
     const studentsString = `${
@@ -35,7 +34,6 @@ export default function SingleCampus() {
             ) : (
                 <div>
                     <h1>{name}</h1>
-                    <img src={imageUrl} />
                     <p>{address}</p>
                     <p>{description}</p>
                     <ul>
@@ -58,9 +56,6 @@ export default function SingleCampus() {
                             ))) ||
                             studentsString}
                     </ul>
-                    <div>
-                        <CampusForm />
-                    </div>
                 </div>
             )}
         </div>

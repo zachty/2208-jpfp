@@ -24,7 +24,7 @@ export default function StudentForm() {
         if (student.id && params.id) {
             dispatch(changeStudentForm(student));
         } else dispatch(changeStudentForm({}));
-    }, [student]);
+    }, [student, params]);
 
     const handleChange = event => {
         const { name, value } = event.target;

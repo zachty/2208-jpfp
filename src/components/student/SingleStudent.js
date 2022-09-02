@@ -27,9 +27,6 @@ export default function SingleStudent() {
             ) : (
                 <div>
                     <div>
-                        <h1>
-                            {firstName} {lastName}
-                        </h1>
                         <img src={imageUrl} />
                         <p>{email}</p>
                         <p>{gpa}</p>
@@ -39,9 +36,6 @@ export default function SingleStudent() {
                             </NavLink>
                         )) ||
                             noCampus}
-                    </div>
-                    <div>
-                        <StudentForm />
                     </div>
                 </div>
             )}

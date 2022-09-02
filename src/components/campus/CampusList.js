@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import CampusForm from './CampusForm';
 import {
     fetchCampuses,
@@ -10,6 +10,7 @@ import {
 export default function CampusList() {
     const dispatch = useDispatch();
     const campuses = useSelector(state => state.campuses);
+    const params = useParams();
 
     useEffect(() => {
         dispatch(fetchCampuses());
@@ -22,19 +23,24 @@ export default function CampusList() {
     return (
         <div>
             <div>
-                {campuses.map(campus => (
-                    <div key={campus.id}>
-                        <h1>
-                            <NavLink to={`/campuses/${campus.id}`}>
-                                {campus.name}
-                            </NavLink>
-                            <button value={campus.id} onClick={handleDelete}>
-                                X
-                            </button>
-                        </h1>
-                        <img src={campus.imageUrl} width="150px" />
-                    </div>
-                ))}
+                {(campuses.length &&
+                    campuses.map(campus => (
+                        <div key={campus.id}>
+                            <h2>
+                                <NavLink to={`/campuses/${campus.id}`}>
+                                    {campus.name}
+                                </NavLink>
+                                <button
+                                    value={campus.id}
+                                    onClick={handleDelete}
+                                >
+                                    X
+                                </button>
+                            </h2>
+                            <img src={campus.imageUrl} width="150px" />
+                            {Number(params.id) === campus.id && <Outlet />}
+                        </div>
+                    ))) || <p>No Campuses to display.</p>}
             </div>
             <div>
                 <CampusForm />
