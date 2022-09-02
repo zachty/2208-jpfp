@@ -73,6 +73,7 @@ export default function StudentList() {
         dispatch(orderStudents(newOrder));
     }
 
+    //TODO: break out filter/order into components
     return (
         <div>
             <div>
@@ -104,7 +105,14 @@ export default function StudentList() {
                         orderedStudents.map(student => (
                             <div key={student.id}>
                                 <h2>
-                                    <NavLink to={`/students/${student.id}`}>
+                                    <NavLink
+                                        to={
+                                            '/students' +
+                                            (Number(params.id) === student.id
+                                                ? '/'
+                                                : `/${student.id}`)
+                                        }
+                                    >
                                         {student.firstName} {student.lastName}
                                     </NavLink>
                                     <button

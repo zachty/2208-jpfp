@@ -2707,7 +2707,7 @@ function CampusList() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: campus.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
-      to: "/campuses/".concat(campus.id)
+      to: '/campuses' + (Number(params.id) === campus.id ? '/' : "/".concat(campus.id))
     }, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: function onClick() {
         return dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_4__.deleteCampus)(campus.id));
@@ -2864,8 +2864,7 @@ function SingleStudent() {
       gpa = student.gpa,
       campus = student.campus; //grab campus or switch to message if student doesnt have one
 
-  var noCampus = 'This student does not have a campus!'; //TODO: set navlink to switch between campuses and campus.id
-
+  var noCampus = 'This student does not have a campus!';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, isFetching && !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: imageUrl
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, gpa), campus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
@@ -3096,7 +3095,8 @@ function StudentList() {
       ascending: true
     };
     dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.orderStudents)(newOrder));
-  }
+  } //TODO: break out filter/order into components
+
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Order:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleClick,
@@ -3118,7 +3118,7 @@ function StudentList() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: student.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
-      to: "/students/".concat(student.id)
+      to: '/students' + (Number(params.id) === student.id ? '/' : "/".concat(student.id))
     }, student.firstName, " ", student.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: function onClick() {
         return dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.deleteStudent)(student.id));

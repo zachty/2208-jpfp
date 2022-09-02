@@ -33,7 +33,14 @@ export default function CampusList() {
                         campuses.map(campus => (
                             <div key={campus.id}>
                                 <h2>
-                                    <NavLink to={`/campuses/${campus.id}`}>
+                                    <NavLink
+                                        to={
+                                            '/campuses' +
+                                            (Number(params.id) === campus.id
+                                                ? '/'
+                                                : `/${campus.id}`)
+                                        }
+                                    >
                                         {campus.name}
                                     </NavLink>
                                     <button

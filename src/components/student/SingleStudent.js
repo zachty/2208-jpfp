@@ -25,7 +25,6 @@ export default function SingleStudent() {
     //grab campus or switch to message if student doesnt have one
     const noCampus = 'This student does not have a campus!';
 
-    //TODO: set navlink to switch between campuses and campus.id
     return (
         <>
             {isFetching && !student.id ? (
