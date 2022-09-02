@@ -21,7 +21,7 @@ export const fetchStudent = id => {
 };
 
 //INITIAL STATE
-const init = { student: {}, campus: {} };
+const init = {};
 
 //REDUCER
 export default (state = init, action) => {

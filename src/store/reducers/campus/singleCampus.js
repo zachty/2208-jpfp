@@ -35,7 +35,7 @@ export const unregisterStudent = (id, studentId) => {
 };
 
 //INITIAL STATE
-const init = { campus: {}, students: [] };
+const init = {};
 
 //REDUCER
 export default (state = init, action) => {

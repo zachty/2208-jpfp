@@ -5,6 +5,7 @@ import {
     StudentList,
     SingleCampus,
     SingleStudent,
+    NotFound,
 } from './components';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/campuses/:id" element={<SingleCampus />} />
                     <Route path="/students" element={<StudentList />} />
                     <Route path="/students/:id" element={<SingleStudent />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
         </>
