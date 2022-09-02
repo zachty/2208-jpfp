@@ -84,6 +84,20 @@ const syncAndSeed = async () => {
     doom.setCampus(hell);
     snow.setCampus(wall);
 
+    //seed an extra 100 campuses/students
+    for (let i = 0; i < 100; i++) {
+        await Campus.create({
+            name: `University${i}`,
+            address: `${i} Uni Drive`,
+        });
+        const stud = await Student.create({
+            firstName: `Student`,
+            lastName: i,
+            email: `stud${i}@uni.edu`,
+        });
+        stud.setCampus(testCampus);
+    }
+
     console.log(`
     Seeding successful!
   `);
