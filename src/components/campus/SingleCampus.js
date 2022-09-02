@@ -42,7 +42,6 @@ export default function SingleCampus() {
                 <NotFound />
             ) : (
                 <div>
-                    <h1>{name}</h1>
                     <p>{address}</p>
                     <p>{description}</p>
                     <ul>

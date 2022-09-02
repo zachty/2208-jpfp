@@ -23,10 +23,6 @@ export default function CampusList() {
         dispatch(gotData);
     }, [campuses]);
 
-    const handleDelete = e => {
-        dispatch(deleteCampus(e.target.value));
-    };
-
     return (
         <div>
             <div>
@@ -41,8 +37,9 @@ export default function CampusList() {
                                         {campus.name}
                                     </NavLink>
                                     <button
-                                        value={campus.id}
-                                        onClick={handleDelete}
+                                        onClick={() =>
+                                            dispatch(deleteCampus(campus.id))
+                                        }
                                     >
                                         X
                                     </button>

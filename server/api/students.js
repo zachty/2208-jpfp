@@ -18,7 +18,6 @@ router.get('/:id', async (req, res, next) => {
         const student = await Student.findByPk(req.params.id, {
             include: Campus,
         });
-        //TODO: replace this with eager loading, will break component
         res.send(student);
     } catch (error) {
         console.error(error);
