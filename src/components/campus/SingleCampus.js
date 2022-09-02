@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import NotFound from '../NotFound';
+import { fetchData, gotData } from '../../store/reducers';
 import {
     fetchCampus,
     unregisterStudent,
@@ -10,10 +11,16 @@ import {
 export default function SingleCampus() {
     const dispatch = useDispatch();
     const params = useParams();
+    const isFetching = useSelector(state => state.isFetching);
 
     useEffect(() => {
+        dispatch(fetchData());
         dispatch(fetchCampus(params.id));
     }, []);
+
+    useEffect(() => {
+        dispatch(gotData);
+    }, [campus]);
 
     const campus = useSelector(state => state.campus);
     const { name, address, description, students } = campus;
@@ -29,7 +36,9 @@ export default function SingleCampus() {
 
     return (
         <div>
-            {!campus.id ? (
+            {isFetching && !campus.id ? (
+                <p>Loading...</p>
+            ) : !campus.id ? (
                 <NotFound />
             ) : (
                 <div>

@@ -8,6 +8,7 @@ import {
     singleStudentReducer,
     campusFormReducer,
     studentFormReducer,
+    isFetching,
 } from './reducers';
 
 export const allReducers = combineReducers({
@@ -17,6 +18,7 @@ export const allReducers = combineReducers({
     campus: singleCampusReducer,
     campusForm: campusFormReducer,
     studentForm: studentFormReducer,
+    isFetching,
 });
 
 function configureStore() {
