@@ -3,6 +3,8 @@ import axios from 'axios';
 //ACTION CONSTS
 const SET_CAMPUSES = 'SET_CAMPUSES';
 const DELETE_CAMPUS = 'DELETE_CAMPUS';
+const ORDER_CAMPUSES = 'ORDER_CAMPUSES';
+const FILTER_CAMPUSES = 'FILTER_CAMPUSES';
 
 //ACTION GENERATORS
 const setCampuses = campusList => ({
@@ -13,6 +15,16 @@ const setCampuses = campusList => ({
 const resetCampuses = deletedCampus => ({
     type: DELETE_CAMPUS,
     deletedCampus,
+});
+
+export const orderCampuses = order => ({
+    type: ORDER_CAMPUSES,
+    order,
+});
+
+export const filterCampuses = filter => ({
+    type: FILTER_CAMPUSES,
+    filter,
 });
 
 //THUNKS
@@ -38,15 +50,32 @@ export const deleteCampus = id => {
     };
 };
 
+//INITIAL STATE
+const init = {
+    campuses: [],
+    filter: 'all',
+    order: { by: 'name', ascending: true },
+};
+
 //REDUCER
-export default (state = [], action) => {
+export default (state = init, action) => {
     switch (action.type) {
         case SET_CAMPUSES:
-            return action.campusList;
+            return { ...state, campuses: action.campusList };
         case DELETE_CAMPUS:
-            return state.filter(campus => {
-                return campus.id !== action.deletedCampus.id;
-            });
+            return {
+                ...state,
+                campuses: state.filter(campus => {
+                    return campus.id !== action.deletedCampus.id;
+                }),
+            };
+        case ORDER_CAMPUSES:
+            return {
+                ...state,
+                order: action.order,
+            };
+        case FILTER_CAMPUSES:
+            return { ...state, filter: action.filter };
         default:
             return state;
     }

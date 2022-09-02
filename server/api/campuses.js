@@ -4,7 +4,7 @@ const { Campus, Student } = require('../db');
 // GET api/campuses
 router.get('/', async (req, res, next) => {
     try {
-        const data = await Campus.findAll();
+        const data = await Campus.findAll({ include: Student });
         res.send(data);
     } catch (error) {
         console.error(error);
