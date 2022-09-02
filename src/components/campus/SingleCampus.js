@@ -13,22 +13,22 @@ export default function SingleCampus() {
     const params = useParams();
     const isFetching = useSelector(state => state.isFetching);
 
-    useEffect(() => {
-        dispatch(fetchData());
-        dispatch(fetchCampus(params.id));
-    }, []);
-
-    useEffect(() => {
-        dispatch(gotData);
-    }, [campus]);
-
     const campus = useSelector(state => state.campus);
-    const { name, address, description, students } = campus;
+    const { address, description, students } = campus;
 
     //if no students, use this string
     const studentsString = `${
         students && students.length
     } students assigned to this campus!`;
+
+    useEffect(() => {
+        dispatch(gotData());
+    }, [campus]);
+
+    useEffect(() => {
+        dispatch(fetchData());
+        dispatch(fetchCampus(params.id));
+    }, []);
 
     const handleUnregister = id => {
         dispatch(unregisterStudent(params.id, id));
@@ -36,7 +36,7 @@ export default function SingleCampus() {
 
     return (
         <div>
-            {isFetching && !campus.id ? (
+            {isFetching ? (
                 <p>Loading...</p>
             ) : !campus.id ? (
                 <NotFound />

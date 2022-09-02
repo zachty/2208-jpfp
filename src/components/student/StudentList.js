@@ -26,14 +26,18 @@ export default function StudentList() {
                 return !student.campusId;
             case 'registered':
                 return student.campusId;
+            case 'gpa2':
+                return student.gpa > 2;
+            case 'noGPA':
+                return !student.gpa;
             default:
                 throw new Error('Incorrect filter');
         }
     });
     //ORDER 'EM
     const orderedStudents = filteredStudents.sort((a, b) => {
-        const valA = a[order.by].toUpperCase();
-        const valB = b[order.by].toUpperCase();
+        const valA = a[order.by] && a[order.by].toUpperCase();
+        const valB = b[order.by] && b[order.by].toUpperCase();
         return order.ascending
             ? valA < valB //ascending order - smallest to largest
                 ? -1 //sort a before b
@@ -49,16 +53,15 @@ export default function StudentList() {
     });
     //STICK 'EM IN A STEW
 
+    //set isFetching to false every time students list changes
+    useEffect(() => {
+        dispatch(gotData());
+    }, [students]);
     //get data when page loads
     useEffect(() => {
         dispatch(fetchData());
         dispatch(fetchStudents());
     }, []);
-
-    //set isFetching to false every time students list changes
-    useEffect(() => {
-        dispatch(gotData);
-    }, [students]);
 
     function handleClick(e) {
         const newOrder =
@@ -90,6 +93,8 @@ export default function StudentList() {
                         <option value="all">ALL</option>
                         <option value="registered">REGISTERED</option>
                         <option value="unregistered">UNREGISTERED</option>
+                        <option value="gpa2">GPA {'>'} 2</option>
+                        <option value="noGPA">NO GPA</option>
                     </select>
                 </div>
             </div>

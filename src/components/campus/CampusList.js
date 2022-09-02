@@ -54,13 +54,13 @@ export default function CampusList() {
     //STICK 'EM IN A STEW
 
     useEffect(() => {
+        dispatch(gotData());
+    }, [campuses]);
+
+    useEffect(() => {
         dispatch(fetchData());
         dispatch(fetchCampuses());
     }, []);
-
-    useEffect(() => {
-        dispatch(gotData);
-    }, [campuses]);
 
     function handleClick(e) {
         const newOrder =

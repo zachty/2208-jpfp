@@ -2735,12 +2735,12 @@ function CampusList() {
   }); //STICK 'EM IN A STEW
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
+  }, [campuses]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
     dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_4__.fetchCampuses)());
   }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch(_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData);
-  }, [campuses]);
 
   function handleClick(e) {
     var newOrder = e.target.value === order.by ? {
@@ -2818,28 +2818,27 @@ function SingleCampus() {
   var isFetching = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.isFetching;
   });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
-    dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_4__.fetchCampus)(params.id));
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch(_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData);
-  }, [campus]);
   var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campus;
   });
-  var name = campus.name,
-      address = campus.address,
+  var address = campus.address,
       description = campus.description,
       students = campus.students; //if no students, use this string
 
   var studentsString = "".concat(students && students.length, " students assigned to this campus!");
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
+  }, [campus]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
+    dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_4__.fetchCampus)(params.id));
+  }, []);
 
   var handleUnregister = function handleUnregister(id) {
     dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_4__.unregisterStudent)(params.id, id));
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !campus.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : !campus.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Enrollees:"), students && students.length && students.map(function (student) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : !campus.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Enrollees:"), students && students.length && students.map(function (student) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
       key: student.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
@@ -2913,14 +2912,7 @@ function SingleStudent() {
   var isFetching = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.isFetching;
   });
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
-    dispatch((0,_store_reducers_student_singleStudent__WEBPACK_IMPORTED_MODULE_4__.fetchStudent)(params.id));
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch(_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData);
-  }, [student]); //deconstruct student and campus from store
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(); //deconstruct student and campus from store
 
   var student = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.student;
@@ -2931,10 +2923,18 @@ function SingleStudent() {
       campus = student.campus; //grab campus or switch to message if student doesnt have one
 
   var noCampus = 'This student does not have a campus!';
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, isFetching && !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    console.log('🎉🎉🎉🎉inside got data🎉🎉🎉🎉');
+    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
+  }, [student]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
+    dispatch((0,_store_reducers_student_singleStudent__WEBPACK_IMPORTED_MODULE_4__.fetchStudent)(params.id));
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, isFetching ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: imageUrl,
     width: "200px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, gpa), campus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, gpa || 'No GPA yet.'), campus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
     to: "/campuses/".concat(campus.id)
   }, campus.name) || noCampus)));
 }
@@ -3129,14 +3129,20 @@ function StudentList() {
       case 'registered':
         return student.campusId;
 
+      case 'gpa2':
+        return student.gpa > 2;
+
+      case 'noGPA':
+        return !student.gpa;
+
       default:
         throw new Error('Incorrect filter');
     }
   }); //ORDER 'EM
 
   var orderedStudents = filteredStudents.sort(function (a, b) {
-    var valA = a[order.by].toUpperCase();
-    var valB = b[order.by].toUpperCase();
+    var valA = a[order.by] && a[order.by].toUpperCase();
+    var valB = b[order.by] && b[order.by].toUpperCase();
     return order.ascending ? valA < valB //ascending order - smallest to largest
     ? -1 //sort a before b
     : valB < valA ? 1 //sort a after b
@@ -3144,16 +3150,16 @@ function StudentList() {
     : //descending order - largest to smallest (for me pls dont make fun about not remembering asc vs des)
     valB < valA ? -1 : valA < valB ? 1 : 0;
   }); //STICK 'EM IN A STEW
-  //get data when page loads
+  //set isFetching to false every time students list changes
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
+  }, [students]); //get data when page loads
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
     dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.fetchStudents)());
-  }, []); //set isFetching to false every time students list changes
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    dispatch(_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData);
-  }, [students]);
+  }, []);
 
   function handleClick(e) {
     var newOrder = e.target.value === order.by ? {
@@ -3183,7 +3189,11 @@ function StudentList() {
     value: "registered"
   }, "REGISTERED"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "unregistered"
-  }, "UNREGISTERED")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !orderedStudents.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : orderedStudents.length && orderedStudents.map(function (student) {
+  }, "UNREGISTERED"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "gpa2"
+  }, "GPA ", '>', " 2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "noGPA"
+  }, "NO GPA")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !orderedStudents.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : orderedStudents.length && orderedStudents.map(function (student) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: student.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {

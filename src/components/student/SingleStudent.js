@@ -10,24 +10,25 @@ export default function SingleStudent() {
     const isFetching = useSelector(state => state.isFetching);
     const params = useParams();
 
-    useEffect(() => {
-        dispatch(fetchData());
-        dispatch(fetchStudent(params.id));
-    }, []);
-
-    useEffect(() => {
-        dispatch(gotData);
-    }, [student]);
-
     //deconstruct student and campus from store
     const student = useSelector(state => state.student);
     const { imageUrl, email, gpa, campus } = student;
     //grab campus or switch to message if student doesnt have one
     const noCampus = 'This student does not have a campus!';
 
+    useEffect(() => {
+        console.log('🎉🎉🎉🎉inside got data🎉🎉🎉🎉');
+        dispatch(gotData());
+    }, [student]);
+
+    useEffect(() => {
+        dispatch(fetchData());
+        dispatch(fetchStudent(params.id));
+    }, []);
+
     return (
         <>
-            {isFetching && !student.id ? (
+            {isFetching ? (
                 <p>Loading...</p>
             ) : !student.id ? (
                 <NotFound />
@@ -37,7 +38,7 @@ export default function SingleStudent() {
                         {/* TODO: replace with css */}
                         <img src={imageUrl} width="200px" />
                         <p>{email}</p>
-                        <p>{gpa}</p>
+                        <p>{gpa || 'No GPA yet.'}</p>
                         {(campus && (
                             <NavLink to={`/campuses/${campus.id}`}>
                                 {campus.name}
