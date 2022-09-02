@@ -15,6 +15,7 @@ export default function StudentList() {
     const params = useParams();
     const isFetching = useSelector(state => state.isFetching);
     const { students, filter, order } = useSelector(state => state.students);
+
     //would like to be able to do this in the reducer but not sure how
     //FILTER 'EM
     const filteredStudents = students.filter(student => {
@@ -30,21 +31,16 @@ export default function StudentList() {
         }
     });
     //ORDER 'EM
-    //TODO: fix bug, sorts numbers highest to lowest, names from z to a when asc is true
-    //sorts numbers incorrectly? when ascending = true, highest number is on top
     const orderedStudents = filteredStudents.sort((a, b) => {
-        //1 sort a after b
-        //-1 sort a before b
-        //0 sort in previous order
         const valA = a[order.by].toUpperCase();
         const valB = b[order.by].toUpperCase();
         return order.ascending
             ? valA < valB //ascending order - smallest to largest
-                ? -1
+                ? -1 //sort a before b
                 : valB < valA
-                ? 1
-                : 0
-            : //descending order - largest to smallest
+                ? 1 //sort a after b
+                : 0 //sort in previous order
+            : //descending order - largest to smallest (for me pls dont make fun about not remembering asc vs des)
             valB < valA
             ? -1
             : valA < valB

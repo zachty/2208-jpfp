@@ -2583,13 +2583,17 @@ function CampusForm() {
   });
   var name = form.name,
       address = form.address,
-      error = form.error; //sets initial input, whether updating or creating
+      error = form.error;
+  var message = error && error.response.data || ''; //short circuit ^^ so we can always use string methods
+  //sets initial input, whether updating or creating
 
   var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campus;
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (params.id && campus.id) {
+      if (error) campus.error = error; //persist error
+
       dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.changeCampusForm)(campus));
     } else dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.changeCampusForm)({}));
   }, [params, campus]);
@@ -2643,19 +2647,19 @@ function CampusForm() {
     }))();
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, error && error.response.data === 'Validation error' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Campus already exists! Try something else.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, message === 'Validation error' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Campus already exists! Try something else.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "Name",
     name: "name",
     value: name,
     onChange: handleChange
-  }), error && !name && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), message.includes('name') && (!name || params.id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "Address",
     name: "address",
     value: address,
     onChange: handleChange
-  }), error && !address && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }), message.includes('address') && (!address || params.id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
   }, params.id ? 'Update' : 'Create')));
 }
@@ -2866,7 +2870,8 @@ function SingleStudent() {
 
   var noCampus = 'This student does not have a campus!';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, isFetching && !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : !student.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: imageUrl
+    src: imageUrl,
+    width: "200px"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, gpa), campus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
     to: "/campuses/".concat(campus.id)
   }, campus.name) || noCampus)));
@@ -2923,13 +2928,17 @@ function StudentForm() {
   var firstName = form.firstName,
       lastName = form.lastName,
       email = form.email,
-      error = form.error; //if editing an entry
+      error = form.error;
+  var message = error && error.response.data || ''; //short circuit ^^ so we can always use string methods
+  //if editing an entry
 
   var student = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.student;
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (student.id && params.id) {
+      if (error) student.error = error; //persist error
+
       dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.changeStudentForm)(student));
     } else dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.changeStudentForm)({}));
   }, [student, params]);
@@ -2982,24 +2991,24 @@ function StudentForm() {
     }))();
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, error && error.response.data === 'Validation error' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Student already exists! Try a different email.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, message === 'Validation error' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Student already exists! Try a different email.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     name: "firstName",
     placeholder: "First Name",
     value: firstName,
     onChange: handleChange
-  }), error && !firstName && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), message.includes('firstName') && (!firstName || params.id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     name: "lastName",
     placeholder: "Last Name",
     value: lastName,
     onChange: handleChange
-  }), error && !lastName && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), message.includes('lastName') && (!lastName || params.id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     name: "email",
     placeholder: "email",
     value: email,
     onChange: handleChange
-  }), error && (error.response.data.includes('notEmpty on email') ? !email && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Invalid e-mail!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }), message.includes('notEmpty on email') ? (!email || params.id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Field cannot be blank!") : message.includes('isEmail') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Invalid e-mail!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
   }, params.id ? 'Update' : 'Create')));
 }
@@ -3062,17 +3071,15 @@ function StudentList() {
         throw new Error('Incorrect filter');
     }
   }); //ORDER 'EM
-  //TODO: fix bug, sorts numbers highest to lowest, names from z to a when asc is true
-  //sorts numbers incorrectly? when ascending = true, highest number is on top
 
   var orderedStudents = filteredStudents.sort(function (a, b) {
-    //1 sort a after b
-    //-1 sort a before b
-    //0 sort in previous order
     var valA = a[order.by].toUpperCase();
     var valB = b[order.by].toUpperCase();
     return order.ascending ? valA < valB //ascending order - smallest to largest
-    ? -1 : valB < valA ? 1 : 0 : //descending order - largest to smallest
+    ? -1 //sort a before b
+    : valB < valA ? 1 //sort a after b
+    : 0 //sort in previous order
+    : //descending order - largest to smallest (for me pls dont make fun about not remembering asc vs des)
     valB < valA ? -1 : valA < valB ? 1 : 0;
   }); //STICK 'EM IN A STEW
   //get data when page loads

@@ -17,11 +17,14 @@ export default function StudentForm() {
     //get the form data
     const form = useSelector(state => state.studentForm);
     const { firstName, lastName, email, error } = form;
+    const message = (error && error.response.data) || '';
+    //short circuit ^^ so we can always use string methods
 
     //if editing an entry
     const student = useSelector(state => state.student);
     useEffect(() => {
         if (student.id && params.id) {
+            if (error) student.error = error; //persist error
             dispatch(changeStudentForm(student));
         } else dispatch(changeStudentForm({}));
     }, [student, params]);
@@ -49,7 +52,7 @@ export default function StudentForm() {
 
     return (
         <div>
-            {error && error.response.data === 'Validation error' ? (
+            {message === 'Validation error' ? (
                 <p>Student already exists! Try a different email.</p>
             ) : (
                 <></>
@@ -62,7 +65,10 @@ export default function StudentForm() {
                         value={firstName}
                         onChange={handleChange}
                     />
-                    {error && !firstName && <p>Field cannot be blank!</p>}
+                    {message.includes('firstName') &&
+                        (!firstName || params.id) && (
+                            <p>Field cannot be blank!</p>
+                        )}
                 </div>
                 <div>
                     <input
@@ -71,7 +77,10 @@ export default function StudentForm() {
                         value={lastName}
                         onChange={handleChange}
                     />
-                    {error && !lastName && <p>Field cannot be blank!</p>}
+                    {message.includes('lastName') &&
+                        (!lastName || params.id) && (
+                            <p>Field cannot be blank!</p>
+                        )}
                 </div>
                 <div>
                     <input
@@ -80,12 +89,9 @@ export default function StudentForm() {
                         value={email}
                         onChange={handleChange}
                     />
-                    {error &&
-                        (error.response.data.includes('notEmpty on email') ? (
-                            !email && <p>Field cannot be blank!</p>
-                        ) : (
-                            <p>Invalid e-mail!</p>
-                        ))}
+                    {message.includes('notEmpty on email')
+                        ? (!email || params.id) && <p>Field cannot be blank!</p>
+                        : message.includes('isEmail') && <p>Invalid e-mail!</p>}
                 </div>
                 <button type="submit">{params.id ? 'Update' : 'Create'}</button>
             </form>

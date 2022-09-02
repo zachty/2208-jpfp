@@ -51,6 +51,7 @@ export default function CampusList() {
                                         X
                                     </button>
                                 </h2>
+                                {/* TODO: replace with css */}
                                 <img src={campus.imageUrl} width="150px" />
                                 {Number(params.id) === campus.id && <Outlet />}
                             </div>

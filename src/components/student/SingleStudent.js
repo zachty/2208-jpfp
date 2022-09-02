@@ -34,7 +34,8 @@ export default function SingleStudent() {
             ) : (
                 <div>
                     <div>
-                        <img src={imageUrl} />
+                        {/* TODO: replace with css */}
+                        <img src={imageUrl} width="200px" />
                         <p>{email}</p>
                         <p>{gpa}</p>
                         {(campus && (

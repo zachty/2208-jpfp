@@ -178,13 +178,13 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 
 #### Ordering
 
--   [ ] Create option for students to be ordered based on lastName on all-students view
--   [ ] Create option for students to be ordered based on GPA on all-students view
+-   [x] Create option for students to be ordered based on lastName on all-students view
+-   [x] Create option for students to be ordered based on GPA on all-students view
 -   [ ] Create option for campuses to be ordered based on number of enrolled students on all-campuses view
 
 #### Filtering
 
--   [ ] Create a filter on all-students view to only show students who are not registered to a campus
+-   [x] Create a filter on all-students view to only show students who are not registered to a campus
 -   [ ] Create a filter on the all-campuses view to only show campuses that do not have any registered students
 
 #### Seeding & Pagination
