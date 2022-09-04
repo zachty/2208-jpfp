@@ -42,6 +42,7 @@ export default function StudentForm() {
                 //edit single student
                 await dispatch(updateStudent(params.id, form));
                 await dispatch(fetchStudent(params.id));
+                await dispatch(fetchStudents());
             } else {
                 //create new student
                 await dispatch(createStudent(form));

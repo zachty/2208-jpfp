@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
 import StudentForm from './StudentForm';
+import { NavLink, Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { fetchData, gotData } from '../../store/reducers';
 import {
     fetchStudents,
@@ -13,6 +13,7 @@ import {
 export default function StudentList() {
     const dispatch = useDispatch();
     const params = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const isFetching = useSelector(state => state.isFetching);
     const { students, filter, order } = useSelector(state => state.students);
 

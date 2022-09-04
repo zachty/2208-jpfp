@@ -2615,7 +2615,7 @@ function CampusForm() {
           switch (_context.prev = _context.next) {
             case 0:
               if (!params.id) {
-                _context.next = 7;
+                _context.next = 9;
                 break;
               }
 
@@ -2627,18 +2627,22 @@ function CampusForm() {
               return dispatch((0,_store_reducers_campus_singleCampus__WEBPACK_IMPORTED_MODULE_3__.fetchCampus)(params.id));
 
             case 5:
-              _context.next = 11;
-              break;
+              _context.next = 7;
+              return dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
 
             case 7:
-              _context.next = 9;
-              return dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.createCampus)(form));
+              _context.next = 13;
+              break;
 
             case 9:
               _context.next = 11;
-              return dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
+              return dispatch((0,_store_reducers_campus_campusForm__WEBPACK_IMPORTED_MODULE_4__.createCampus)(form));
 
             case 11:
+              _context.next = 13;
+              return dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
+
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -2920,11 +2924,8 @@ function SingleStudent() {
   var imageUrl = student.imageUrl,
       email = student.email,
       gpa = student.gpa,
-      campus = student.campus; //grab campus or switch to message if student doesnt have one
-
-  var noCampus = 'This student does not have a campus!';
+      campus = student.campus;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    console.log('🎉🎉🎉🎉inside got data🎉🎉🎉🎉');
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
   }, [student]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -2936,7 +2937,7 @@ function SingleStudent() {
     width: "200px"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, gpa || 'No GPA yet.'), campus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
     to: "/campuses/".concat(campus.id)
-  }, campus.name) || noCampus)));
+  }, campus.name) || 'This student does not have a campus!')));
 }
 
 /***/ }),
@@ -3021,7 +3022,7 @@ function StudentForm() {
           switch (_context.prev = _context.next) {
             case 0:
               if (!params.id) {
-                _context.next = 7;
+                _context.next = 9;
                 break;
               }
 
@@ -3033,18 +3034,22 @@ function StudentForm() {
               return dispatch((0,_store_reducers_student_singleStudent__WEBPACK_IMPORTED_MODULE_3__.fetchStudent)(params.id));
 
             case 5:
-              _context.next = 11;
-              break;
+              _context.next = 7;
+              return dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
 
             case 7:
-              _context.next = 9;
-              return dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.createStudent)(form));
+              _context.next = 13;
+              break;
 
             case 9:
               _context.next = 11;
-              return dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
+              return dispatch((0,_store_reducers_student_studentForm__WEBPACK_IMPORTED_MODULE_4__.createStudent)(form));
 
             case 11:
+              _context.next = 13;
+              return dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
+
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -3091,11 +3096,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _StudentForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StudentForm */ "./src/components/student/StudentForm.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _StudentForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StudentForm */ "./src/components/student/StudentForm.js");
 /* harmony import */ var _store_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/reducers */ "./src/store/reducers/index.js");
 /* harmony import */ var _store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/reducers/student/students */ "./src/store/reducers/student/students.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -3105,6 +3122,12 @@ __webpack_require__.r(__webpack_exports__);
 function StudentList() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
+
+  var _useSearchParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useSearchParams)(),
+      _useSearchParams2 = _slicedToArray(_useSearchParams, 2),
+      searchParams = _useSearchParams2[0],
+      setSearchParams = _useSearchParams2[1];
+
   var isFetching = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.isFetching;
   });

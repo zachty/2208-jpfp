@@ -41,6 +41,7 @@ export default function CampusForm() {
                 //if updating
                 await dispatch(updateCampus(params.id, form));
                 await dispatch(fetchCampus(params.id));
+                await dispatch(fetchCampuses());
             } else {
                 //if making a new campus
                 await dispatch(createCampus(form));
