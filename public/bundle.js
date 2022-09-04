@@ -2689,18 +2689,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CampusForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CampusForm */ "./src/components/campus/CampusForm.js");
 /* harmony import */ var _store_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/reducers */ "./src/store/reducers/index.js");
 /* harmony import */ var _store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/reducers/campus/campuses */ "./src/store/reducers/campus/campuses.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -2709,12 +2697,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function CampusList() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
-
-  var _useSearchParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useSearchParams)(),
-      _useSearchParams2 = _slicedToArray(_useSearchParams, 2),
-      searchParams = _useSearchParams2[0],
-      setSearchParams = _useSearchParams2[1];
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(); // const [searchParams, setSearchParams] = useSearchParams();
 
   var isFetching = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.isFetching;
@@ -2755,18 +2738,15 @@ function CampusList() {
     : //descending order - largest to smallest
     valB < valA ? -1 : valA < valB ? 1 : 0;
   }); //STICK 'EM IN A STEW (10 at a time)
+  // const index = (searchParams.get('page') - 1) * 10;
+  // const pagedCampuses = orderedCampuses.slice(index, index + 10);
 
-  var index = (searchParams.get('page') - 1) * 10;
-  var pagedCampuses = orderedCampuses.slice(index, index + 10);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
   }, [campuses]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
-    dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_4__.fetchCampuses)());
-    setSearchParams({
-      page: 1
-    });
+    dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_4__.fetchCampuses)()); // setSearchParams({ page: 1 });
   }, []);
 
   function handleClick(e) {
@@ -2778,15 +2758,12 @@ function CampusList() {
       ascending: true
     };
     dispatch((0,_store_reducers_campus_campuses__WEBPACK_IMPORTED_MODULE_4__.orderCampuses)(newOrder));
-  }
+  } // function handlePage(i) {
+  //     const page = Number(searchParams.get('page')) + i;
+  //     if (page > filteredCampuses.length / 10 + 1 || page < 1) return;
+  //     setSearchParams({ page });
+  // }
 
-  function handlePage(i) {
-    var page = Number(searchParams.get('page')) + i;
-    if (page > filteredCampuses.length / 10 + 1 || page < 1) return;
-    setSearchParams({
-      page: page
-    });
-  }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Order:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleClick,
@@ -2804,7 +2781,7 @@ function CampusList() {
     value: "students"
   }, "HAS STUDENTS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "noStudents"
-  }, "NO STUDENTS")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !pagedCampuses.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : pagedCampuses.length && pagedCampuses.map(function (campus) {
+  }, "NO STUDENTS")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !orderedCampuses.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : orderedCampuses.length && orderedCampuses.map(function (campus) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: campus.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
@@ -2817,15 +2794,7 @@ function CampusList() {
       src: campus.imageUrl,
       width: "150px"
     }), Number(params.id) === campus.id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Outlet, null));
-  }) || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "No Campuses to display.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CampusForm__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return handlePage(-1);
-    }
-  }, '<'), "Page ", searchParams.get('page'), " /", ' ', Math.ceil(filteredCampuses.length / 10), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return handlePage(1);
-    }
-  }, '>')));
+  }) || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "No Campuses to display.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CampusForm__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
 }
 
 /***/ }),
@@ -3140,18 +3109,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _store_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/reducers */ "./src/store/reducers/index.js");
 /* harmony import */ var _store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/reducers/student/students */ "./src/store/reducers/student/students.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -3160,12 +3117,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function StudentList() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
-
-  var _useSearchParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useSearchParams)(),
-      _useSearchParams2 = _slicedToArray(_useSearchParams, 2),
-      searchParams = _useSearchParams2[0],
-      setSearchParams = _useSearchParams2[1];
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(); // const [searchParams, setSearchParams] = useSearchParams();
 
   var isFetching = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.isFetching;
@@ -3212,9 +3164,9 @@ function StudentList() {
     : //descending order - largest to smallest (for me pls dont make fun about not remembering asc vs des)
     valB < valA ? -1 : valA < valB ? 1 : 0;
   }); //STICK 'EM IN A STEW (10 at a time)
-
-  var index = (searchParams.get('page') - 1) * 10;
-  var pagedStudents = orderedStudents.slice(index, index + 10); //set isFetching to false every time students list changes
+  // const index = (searchParams.get('page') - 1) * 10;
+  // const pagedStudents = orderedStudents.slice(index, index + 10);
+  //set isFetching to false every time students list changes
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.gotData)());
@@ -3222,10 +3174,7 @@ function StudentList() {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     dispatch((0,_store_reducers__WEBPACK_IMPORTED_MODULE_3__.fetchData)());
-    dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.fetchStudents)());
-    setSearchParams({
-      page: 1
-    });
+    dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.fetchStudents)()); // setSearchParams({ page: 1 });
   }, []);
 
   function handleClick(e) {
@@ -3237,15 +3186,12 @@ function StudentList() {
       ascending: true
     };
     dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.orderStudents)(newOrder));
-  }
-
-  function handlePage(i) {
-    var page = Number(searchParams.get('page')) + i;
-    if (page > filteredStudents.length / 10 + 1 || page < 1) return;
-    setSearchParams({
-      page: page
-    });
-  } //TODO: break out filter/order into components
+  } // function handlePage(i) {
+  //     const page = Number(searchParams.get('page')) + i;
+  //     if (page > filteredStudents.length / 10 + 1 || page < 1) return;
+  //     setSearchParams({ page });
+  // }
+  //TODO: break out filter/order into components
 
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Order:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
@@ -3268,7 +3214,7 @@ function StudentList() {
     value: "gpa2"
   }, "GPA ", '>', " 2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "noGPA"
-  }, "NO GPA")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !pagedStudents.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : pagedStudents.length && pagedStudents.map(function (student) {
+  }, "NO GPA")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, isFetching && !orderedStudents.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : orderedStudents.length && orderedStudents.map(function (student) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: student.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.NavLink, {
@@ -3278,15 +3224,7 @@ function StudentList() {
         return dispatch((0,_store_reducers_student_students__WEBPACK_IMPORTED_MODULE_4__.deleteStudent)(student.id));
       }
     }, "X")), Number(params.id) === student.id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Outlet, null));
-  }) || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "No students to display.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentForm__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return handlePage(-1);
-    }
-  }, '<'), "Page ", searchParams.get('page'), " /", ' ', Math.ceil(filteredStudents.length / 10), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return handlePage(1);
-    }
-  }, '>')));
+  }) || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "No students to display.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentForm__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
 }
 
 /***/ }),

@@ -13,7 +13,7 @@ import {
 export default function StudentList() {
     const dispatch = useDispatch();
     const params = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
     const isFetching = useSelector(state => state.isFetching);
     const { students, filter, order } = useSelector(state => state.students);
 
@@ -53,8 +53,8 @@ export default function StudentList() {
             : 0;
     });
     //STICK 'EM IN A STEW (10 at a time)
-    const index = (searchParams.get('page') - 1) * 10;
-    const pagedStudents = orderedStudents.slice(index, index + 10);
+    // const index = (searchParams.get('page') - 1) * 10;
+    // const pagedStudents = orderedStudents.slice(index, index + 10);
 
     //set isFetching to false every time students list changes
     useEffect(() => {
@@ -64,7 +64,7 @@ export default function StudentList() {
     useEffect(() => {
         dispatch(fetchData());
         dispatch(fetchStudents());
-        setSearchParams({ page: 1 });
+        // setSearchParams({ page: 1 });
     }, []);
 
     function handleClick(e) {
@@ -76,11 +76,11 @@ export default function StudentList() {
         dispatch(orderStudents(newOrder));
     }
 
-    function handlePage(i) {
-        const page = Number(searchParams.get('page')) + i;
-        if (page > filteredStudents.length / 10 + 1 || page < 1) return;
-        setSearchParams({ page });
-    }
+    // function handlePage(i) {
+    //     const page = Number(searchParams.get('page')) + i;
+    //     if (page > filteredStudents.length / 10 + 1 || page < 1) return;
+    //     setSearchParams({ page });
+    // }
 
     //TODO: break out filter/order into components
     return (
@@ -109,11 +109,11 @@ export default function StudentList() {
                 </div>
             </div>
             <div>
-                {isFetching && !pagedStudents.length ? (
+                {isFetching && !orderedStudents.length ? (
                     <p>Loading...</p>
                 ) : (
-                    (pagedStudents.length &&
-                        pagedStudents.map(student => (
+                    (orderedStudents.length &&
+                        orderedStudents.map(student => (
                             <div key={student.id}>
                                 <h2>
                                     <NavLink
@@ -142,12 +142,12 @@ export default function StudentList() {
             <div>
                 <StudentForm />
             </div>
-            <div>
+            {/* <div>
                 <button onClick={() => handlePage(-1)}>{'<'}</button>
                 Page {searchParams.get('page')} /{' '}
                 {Math.ceil(filteredStudents.length / 10)}
                 <button onClick={() => handlePage(1)}>{'>'}</button>
-            </div>
+            </div> */}
         </div>
     );
 }
