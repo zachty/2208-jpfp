@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useParams, useSearchParams } from 'react-router-dom';
 import CampusForm from './CampusForm';
 import { fetchData, gotData } from '../../store/reducers';
 import {
@@ -13,6 +13,7 @@ import {
 export default function CampusList() {
     const dispatch = useDispatch();
     const params = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const isFetching = useSelector(state => state.isFetching);
     const { campuses, filter, order } = useSelector(state => state.campuses);
 
@@ -51,7 +52,9 @@ export default function CampusList() {
             ? 1
             : 0;
     });
-    //STICK 'EM IN A STEW
+    //STICK 'EM IN A STEW (10 at a time)
+    const index = (searchParams.get('page') - 1) * 10;
+    const pagedCampuses = orderedCampuses.slice(index, index + 10);
 
     useEffect(() => {
         dispatch(gotData());
@@ -60,6 +63,7 @@ export default function CampusList() {
     useEffect(() => {
         dispatch(fetchData());
         dispatch(fetchCampuses());
+        setSearchParams({ page: 1 });
     }, []);
 
     function handleClick(e) {
@@ -69,6 +73,12 @@ export default function CampusList() {
                 : { by: e.target.value, ascending: true };
 
         dispatch(orderCampuses(newOrder));
+    }
+
+    function handlePage(i) {
+        const page = Number(searchParams.get('page')) + i;
+        if (page > filteredCampuses.length / 10 + 1 || page < 1) return;
+        setSearchParams({ page });
     }
 
     return (
@@ -95,11 +105,11 @@ export default function CampusList() {
                 </div>
             </div>
             <div>
-                {isFetching && !orderedCampuses.length ? (
+                {isFetching && !pagedCampuses.length ? (
                     <p>Loading...</p>
                 ) : (
-                    (orderedCampuses.length &&
-                        orderedCampuses.map(campus => (
+                    (pagedCampuses.length &&
+                        pagedCampuses.map(campus => (
                             <div key={campus.id}>
                                 <h2>
                                     <NavLink
@@ -129,6 +139,12 @@ export default function CampusList() {
             </div>
             <div>
                 <CampusForm />
+            </div>
+            <div>
+                <button onClick={() => handlePage(-1)}>{'<'}</button>
+                Page {searchParams.get('page')} /{' '}
+                {Math.ceil(filteredCampuses.length / 10)}
+                <button onClick={() => handlePage(1)}>{'>'}</button>
             </div>
         </div>
     );

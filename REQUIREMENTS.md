@@ -190,8 +190,8 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 #### Seeding & Pagination
 
 -   [x] Seed 100+ students and 100+ campuses
--   [ ] Implement _front-end_ pagination for the all-students view (e.g. `/students?page=1` renders the first ten students, and `/students?page=2` renders students 11-20)
--   [ ] Implement _front-end_ pagination for the all-campuses view (e.g. `/campuses?page=1` renders the first ten campuses, and `/campuses?page=2` renders campuses 11-20)
+-   [x] Implement _front-end_ pagination for the all-students view (e.g. `/students?page=1` renders the first ten students, and `/students?page=2` renders students 11-20)
+-   [x] Implement _front-end_ pagination for the all-campuses view (e.g. `/campuses?page=1` renders the first ten campuses, and `/campuses?page=2` renders campuses 11-20)
 -   [ ] Implement _back-end_ pagination for students (e.g. `/api/students?page=1` returns the first ten students' data, and `/api/students?page=2` returns students 11-20)
 -   [ ] Implement _back-end_ pagination for campuses (e.g. `/api/campuses?page=1` returns the first ten campuses' data, and `/api/campuses?page=2` returns campuses 11-20)
 

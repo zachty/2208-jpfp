@@ -52,7 +52,9 @@ export default function StudentList() {
             ? 1
             : 0;
     });
-    //STICK 'EM IN A STEW
+    //STICK 'EM IN A STEW (10 at a time)
+    const index = (searchParams.get('page') - 1) * 10;
+    const pagedStudents = orderedStudents.slice(index, index + 10);
 
     //set isFetching to false every time students list changes
     useEffect(() => {
@@ -62,6 +64,7 @@ export default function StudentList() {
     useEffect(() => {
         dispatch(fetchData());
         dispatch(fetchStudents());
+        setSearchParams({ page: 1 });
     }, []);
 
     function handleClick(e) {
@@ -71,6 +74,12 @@ export default function StudentList() {
                 : { by: e.target.value, ascending: true };
 
         dispatch(orderStudents(newOrder));
+    }
+
+    function handlePage(i) {
+        const page = Number(searchParams.get('page')) + i;
+        if (page > filteredStudents.length / 10 + 1 || page < 1) return;
+        setSearchParams({ page });
     }
 
     //TODO: break out filter/order into components
@@ -100,11 +109,11 @@ export default function StudentList() {
                 </div>
             </div>
             <div>
-                {isFetching && !orderedStudents.length ? (
+                {isFetching && !pagedStudents.length ? (
                     <p>Loading...</p>
                 ) : (
-                    (orderedStudents.length &&
-                        orderedStudents.map(student => (
+                    (pagedStudents.length &&
+                        pagedStudents.map(student => (
                             <div key={student.id}>
                                 <h2>
                                     <NavLink
@@ -132,6 +141,12 @@ export default function StudentList() {
             </div>
             <div>
                 <StudentForm />
+            </div>
+            <div>
+                <button onClick={() => handlePage(-1)}>{'<'}</button>
+                Page {searchParams.get('page')} /{' '}
+                {Math.ceil(filteredStudents.length / 10)}
+                <button onClick={() => handlePage(1)}>{'>'}</button>
             </div>
         </div>
     );
