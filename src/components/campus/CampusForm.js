@@ -14,7 +14,7 @@ export default function CampusForm() {
     const params = useParams();
     //for changing form values
     const form = useSelector(state => state.campusForm);
-    const { name, address, error } = form;
+    const { name, address, description, error } = form;
     const message = (error && error.response.data) || '';
     //short circuit ^^ so we can always use string methods
 
@@ -79,6 +79,14 @@ export default function CampusForm() {
                     {message.includes('address') && (!address || params.id) && (
                         <p>Field cannot be blank!</p>
                     )}
+                </div>
+                <div>
+                    <textarea
+                        placeholder="Description"
+                        name="description"
+                        value={description || ''}
+                        onChange={handleChange}
+                    />
                 </div>
                 <button type="submit">{params.id ? 'Update' : 'Create'}</button>
             </form>

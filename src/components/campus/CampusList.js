@@ -83,9 +83,9 @@ export default function CampusList() {
 
     return (
         <div>
-            <div>
+            <div className="filter-order">
                 <div>
-                    Order:
+                    Order:{' '}
                     <button onClick={handleClick} value="students">
                         # of Students
                     </button>
@@ -104,41 +104,48 @@ export default function CampusList() {
                     </select>
                 </div>
             </div>
-            <div>
-                {isFetching && !orderedCampuses.length ? (
-                    <p>Loading...</p>
-                ) : (
-                    (orderedCampuses.length &&
-                        orderedCampuses.map(campus => (
-                            <div key={campus.id}>
-                                <h2>
-                                    <NavLink
-                                        to={
-                                            '/campuses' +
-                                            (Number(params.id) === campus.id
-                                                ? '/'
-                                                : `/${campus.id}`)
-                                        }
-                                    >
-                                        {campus.name}
-                                    </NavLink>
-                                    <button
-                                        onClick={() =>
-                                            dispatch(deleteCampus(campus.id))
-                                        }
-                                    >
-                                        X
-                                    </button>
-                                </h2>
-                                {/* TODO: replace with css */}
-                                <img src={campus.imageUrl} width="150px" />
-                                {Number(params.id) === campus.id && <Outlet />}
-                            </div>
-                        ))) || <p>No Campuses to display.</p>
-                )}
-            </div>
-            <div>
-                <CampusForm />
+            <div className="main">
+                <div className="column content">
+                    {isFetching && !orderedCampuses.length ? (
+                        <p>Loading...</p>
+                    ) : (
+                        (orderedCampuses.length &&
+                            orderedCampuses.map(campus => (
+                                <div key={campus.id}>
+                                    <div className="single">
+                                        <NavLink
+                                            to={
+                                                '/campuses' +
+                                                (Number(params.id) === campus.id
+                                                    ? '/'
+                                                    : `/${campus.id}`)
+                                            }
+                                        >
+                                            <h2>{campus.name}</h2>
+                                        </NavLink>
+                                        {campus.students.length} enrollments
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() =>
+                                                dispatch(
+                                                    deleteCampus(campus.id)
+                                                )
+                                            }
+                                        >
+                                            X
+                                        </button>
+                                    </div>
+                                    <img src={campus.imageUrl} />
+                                    {Number(params.id) === campus.id && (
+                                        <Outlet />
+                                    )}
+                                </div>
+                            ))) || <p>No Campuses to display.</p>
+                    )}
+                </div>
+                <div className="column form">
+                    <CampusForm />
+                </div>
             </div>
             {/* <div>
                 <button onClick={() => handlePage(-1)}>{'<'}</button>

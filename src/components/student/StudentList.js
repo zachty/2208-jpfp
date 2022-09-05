@@ -85,9 +85,9 @@ export default function StudentList() {
     //TODO: break out filter/order into components
     return (
         <div>
-            <div>
+            <div className="filter-order">
                 <div>
-                    Order:
+                    Order:{' '}
                     <button onClick={handleClick} value="lastName">
                         Last name
                     </button>
@@ -108,39 +108,50 @@ export default function StudentList() {
                     </select>
                 </div>
             </div>
-            <div>
-                {isFetching && !orderedStudents.length ? (
-                    <p>Loading...</p>
-                ) : (
-                    (orderedStudents.length &&
-                        orderedStudents.map(student => (
-                            <div key={student.id}>
-                                <h2>
-                                    <NavLink
-                                        to={
-                                            '/students' +
-                                            (Number(params.id) === student.id
-                                                ? '/'
-                                                : `/${student.id}`)
-                                        }
-                                    >
-                                        {student.firstName} {student.lastName}
-                                    </NavLink>
-                                    <button
-                                        onClick={() =>
-                                            dispatch(deleteStudent(student.id))
-                                        }
-                                    >
-                                        X
-                                    </button>
-                                </h2>
-                                {Number(params.id) === student.id && <Outlet />}
-                            </div>
-                        ))) || <p>No students to display.</p>
-                )}
-            </div>
-            <div>
-                <StudentForm />
+            <div className="main">
+                <div className="column content">
+                    {isFetching && !orderedStudents.length ? (
+                        <p>Loading...</p>
+                    ) : (
+                        (orderedStudents.length &&
+                            orderedStudents.map(student => (
+                                <div key={student.id}>
+                                    <div className="single">
+                                        <NavLink
+                                            to={
+                                                '/students' +
+                                                (Number(params.id) ===
+                                                student.id
+                                                    ? '/'
+                                                    : `/${student.id}`)
+                                            }
+                                        >
+                                            <h2>
+                                                {student.firstName}{' '}
+                                                {student.lastName}
+                                            </h2>
+                                        </NavLink>
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() =>
+                                                dispatch(
+                                                    deleteStudent(student.id)
+                                                )
+                                            }
+                                        >
+                                            X
+                                        </button>
+                                    </div>
+                                    {Number(params.id) === student.id && (
+                                        <Outlet />
+                                    )}
+                                </div>
+                            ))) || <p>No students to display.</p>
+                    )}
+                </div>
+                <div className="column form">
+                    <StudentForm />
+                </div>
             </div>
             {/* <div>
                 <button onClick={() => handlePage(-1)}>{'<'}</button>

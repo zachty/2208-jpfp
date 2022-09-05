@@ -65,7 +65,7 @@ export default (state = init, action) => {
         case DELETE_CAMPUS:
             return {
                 ...state,
-                campuses: state.filter(campus => {
+                campuses: state.campuses.filter(campus => {
                     return campus.id !== action.deletedCampus.id;
                 }),
             };

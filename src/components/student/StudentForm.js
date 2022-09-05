@@ -16,7 +16,7 @@ export default function StudentForm() {
 
     //get the form data
     const form = useSelector(state => state.studentForm);
-    const { firstName, lastName, email, error } = form;
+    const { firstName, lastName, email, gpa, error } = form;
     const message = (error && error.response.data) || '';
     //short circuit ^^ so we can always use string methods
 
@@ -94,6 +94,18 @@ export default function StudentForm() {
                         ? (!email || params.id) && <p>Field cannot be blank!</p>
                         : message.includes('isEmail') && <p>Invalid e-mail!</p>}
                 </div>
+                <div>
+                    <input
+                        name="gpa"
+                        placeholder="GPA"
+                        value={gpa || ''}
+                        onChange={handleChange}
+                    />
+                    {message.includes('gpa') && params.id && (
+                        <p>Invalid number! Must be between 0 and 4</p>
+                    )}
+                </div>
+                {/* could go through setting up a campus select option here similar to unregistering */}
                 <button type="submit">{params.id ? 'Update' : 'Create'}</button>
             </form>
         </div>
